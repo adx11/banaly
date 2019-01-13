@@ -22,7 +22,7 @@ static int load_symbols_bfd(bfd *bfd_h, Binary *bin)
     if (n < 0) {
         fprintf(stderr, "failed to read symtab (%s)\n",
                 BFD_ERRMSG);
-        goto fail;    
+        goto fail;
     } else if (n) {
         bfd_symtab = (asymbol **)malloc(n);
         if (!bfd_symtab) {
@@ -70,7 +70,7 @@ static int load_dynsyms_bfd(bfd *bfd_h, Binary *bin)
     if (n < 0) {
         fprintf(stderr, "failed to read symtab (%s)\n",
                 BFD_ERRMSG);
-        goto fail;    
+        goto fail;
     } else if (n) {
         bfd_dynsym = (asymbol **)malloc(n);
         if (!bfd_dynsym) {
@@ -125,9 +125,9 @@ static int load_sections_bfd(bfd *bfd_h, Binary *bin)
         } else if (bfd_flags & SEC_DATA) {
             sectype = Section::SEC_TYPE_DATA;
         } else {
-            continue;  
+            continue;
         }
-        
+
         vma = bfd_section_vma(bfd_h, bfd_sec);
         size = bfd_section_size(bfd_h, bfd_sec);
         secname = bfd_section_name(bfd_h, bfd_sec);
@@ -164,7 +164,7 @@ static bfd *open_bfd(std::string &fname)
 
     if (!bfd_inited) {
         bfd_init();
-        bfd_inited = 1;    
+        bfd_inited = 1;
     }
 
     bfd_h = bfd_openr(fname.c_str(), NULL);
@@ -179,16 +179,16 @@ static bfd *open_bfd(std::string &fname)
                 fname.c_str(), BFD_ERRMSG);
         return NULL;
     }
-    
+
     /* Some versions of bdf_check_format pessimistically set a wrong_format
-       error before detecting the format and then neglect to unset it once 
+       error before detecting the format and then neglect to unset it once
        the format has been detected.
     */
     bfd_set_error(bfd_error_no_error);
 
     if (bfd_get_flavour(bfd_h) == bfd_target_unknown_flavour) {
         fprintf(stderr, "unrecognized format for binary '%s' (%s)\n",
-                fname.c_str(), BFD_ERRMSG);                
+                fname.c_str(), BFD_ERRMSG);
         return NULL;
     }
 
